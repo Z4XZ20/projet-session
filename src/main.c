@@ -4,5 +4,5 @@
 void main() {
 
 write_database();
-search();
+
 } 
