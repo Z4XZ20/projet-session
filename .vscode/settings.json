@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "exo1.C": "cpp",
+        "test.C": "cpp",
+        "stdlib.h": "c",
+        "tools.h": "c",
+        "stdio.h": "c",
+        "string.h": "c"
+    }
+}
