@@ -149,7 +149,7 @@ void write_database() /*open file and overwrite database at start*/
     int i,temp;
     FILE *fptr;                      
     fptr = fopen("Database.txt","w");
-    fprintf(fptr,"\n   nom du livre                                                 |status | Date de retour |\n");
+    fprintf(fptr,"   nom du livre                                                 |status | Date de retour |\n");
     for(i=1;i<=30;i++)
     {   
        
@@ -167,7 +167,7 @@ void write_database() /*open file and overwrite database at start*/
     
 }
 
-int stringcounter(char *book_name)/*count the full length of a string and return the number*/
+int stringcounter(char *book_name)/*count the full length of a string with spaces and return the number*/
 {   
     int i,space=0,letter=0,total;
 
@@ -202,7 +202,7 @@ void search()/*recherche les livres dans la database*/
     reducer(*look);
 }
 
-void reducer( char **look)/*goes trough a string a convert uppercase to lower case*/
+void reducer(char *look)/*goes trough a string a convert uppercase to lower case*/
 {                                 /*to facilitate the search process*/
     printf("1- %s",look);
 }
@@ -213,6 +213,28 @@ int id_parts()/*dissassemble the different part of the search result string into
 
 }
 
+int checkfile_lenght()/*open file check for number of line and close*/
+{
+    int nb_ligne=1;
+    FILE *fptr;
+    char *test;
+    test=(char*)malloc(250*sizeof(char*));
+    fptr = fopen("Database.txt","r");
+    if(fptr == NULL)
+    {
+        return 0;
+    }
+    while(fgets(test,300,fptr)!=NULL)
+    {
+        nb_ligne++;
+    }
+    nb_ligne=(nb_ligne/2)-1;
+    printf("%d",nb_ligne);
+    free(test);
+    fclose(fptr);
+
+    return nb_ligne;
+}
 
 
 /*convert ascii letter from upper to lower =+32 on ascii code*/

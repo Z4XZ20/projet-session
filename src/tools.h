@@ -16,5 +16,11 @@ int stringcounter();
 void search();
 int id_parts(char *look_search);
 int reducer( char *text);
+int checkfile_lenght();
 
+typedef struct etat_livre{
+    char nom_livre[60];
+    int disponible;
+    char date_retour[20];
+} Livre;
 #endif
