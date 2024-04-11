@@ -164,7 +164,7 @@ void write_database() /*open file and overwrite database at start*/
         }
         fprintf(fptr,"|   0   |       --       |\n");
     }
-    
+    fclose(fptr);
 }
 
 int stringcounter(char *book_name)/*count the full length of a string with spaces and return the number*/
@@ -189,28 +189,56 @@ int stringcounter(char *book_name)/*count the full length of a string with space
     return total;
 }
 
-void search()/*recherche les livres dans la database*/
-{   
-    const int standard=100;
-    char *look;
-    char sizelook=0;
-    look=malloc(standard * sizeof(char));       /* give standard value before resizing to right size*/
-    scanf("%s",look);
-    sizelook=stringcounter(look);
-    printf("%d %s\n",sizelook,look);
-    look=malloc(sizelook+1 * sizeof(char));
-    reducer(*look);
-}
-
-void reducer(char *look)/*goes trough a string a convert uppercase to lower case*/
-{                                 /*to facilitate the search process*/
-    printf("1- %s",look);
-}
-
-
-int id_parts()/*dissassemble the different part of the search result string into component and return them in 3 different variable */
+int id_parts(struct etat_livre *Livre,char *temp,int book_read)/*dissassemble the different part of the search result string into component and return them in 3 different variable */
 {                              /*ex: name | status | date de retour */
+    int lenght;
+    int pos1=0,pos2=0,i,u;
+    char c={'|'};
+    char *interim;
+    interim=(char*)malloc(250*sizeof(char*));
+    lenght=strlen(temp);
+    if(lenght<=20)
+    {
+        return;
+    }
+    for(i=1;i<lenght-2;i++)
+    {
+        if(temp[i]==c)
+        {   
+            if(pos1==0)
+            {
+                pos1=i;
+            }
+            pos2=i;
+        }
+    }
+    for(i=4;i<lenght-2;i++)
+    {
+        
+    }
+}
 
+int store_data(struct etat_livre *livre,int nb_ligne)/*store data in the struct for easier modification and add*/
+{
+    FILE *fptr;
+    char *temp;
+    int book_read=1;
+    int error=0;
+    temp=(char*)malloc(250*sizeof(char*));
+    fptr = fopen("Database.txt","r");
+    if(fptr == NULL)
+    {
+        return 0;
+    }
+
+    while(fgets(temp,300,fptr)!=NULL)
+    {
+        printf("%s",temp);
+        id_parts(livre,temp,book_read);                                           /*send the current text string to being processed and stored*/
+        book_read++;
+    }
+    free(temp);
+    fclose(fptr);
 }
 
 int checkfile_lenght()/*open file check for number of line and close*/
@@ -229,13 +257,11 @@ int checkfile_lenght()/*open file check for number of line and close*/
         nb_ligne++;
     }
     nb_ligne=(nb_ligne/2)-1;
-    printf("%d",nb_ligne);
     free(test);
     fclose(fptr);
 
     return nb_ligne;
 }
-
 
 /*convert ascii letter from upper to lower =+32 on ascii code*/
 /*    char book[30];
@@ -243,3 +269,23 @@ int checkfile_lenght()/*open file check for number of line and close*/
     fgets(book,30,stdin);
 
     printf("book is: %s",book);*/
+
+/*
+void search()/*recherche les livres dans la database*//*
+{   
+    const int standard=100;
+    char *look;
+    char sizelook=0;
+    look=malloc(standard * sizeof(char));       /* give standard value before resizing to right size*//*
+    scanf("%s",look);
+    sizelook=stringcounter(look);
+    printf("%d %s\n",sizelook,look);
+    look=malloc(sizelook+1 * sizeof(char));
+    reducer(*look);
+}
+*//*
+void reducer(char *look)/*goes trough a string a convert uppercase to lower case*//*
+{                                 /*to facilitate the search process*//*
+    printf("1- %s",look);
+}
+*/
