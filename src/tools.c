@@ -1,3 +1,4 @@
+#include "../src/tools.h"
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -138,13 +139,13 @@ const char* book_inv(int i) /*contains all the book names*/
     
         break;
 
-    return book_name;
-}
+        return book_name;
+    }
 
 
 }
 
-void write_database() /*open file and overwrite database at start*/
+void write_database() /*open file and overwrite database at start if database doesnt exist*/
 {   
     int i,temp;
     FILE *fptr;                      
@@ -189,19 +190,23 @@ int stringcounter(char *book_name)/*count the full length of a string with space
     return total;
 }
 
-int id_parts(struct etat_livre *Livre,char *temp,int book_read)/*dissassemble the different part of the search result string into component and return them in 3 different variable */
+void id_parts(Database* database,char *temp,int book_read)/*dissassemble the different part of the search result string into component and return them in 3 different variable */
 {                              /*ex: name | status | date de retour */
-    int lenght;
-    int pos1=0,pos2=0,i,u;
+    int lenght=0;
+    int pos1=0,pos2=0,i=0,u=0,t=0;
+    char *nom,*disponible,*date;
     char c={'|'};
     char *interim;
-    interim=(char*)malloc(250*sizeof(char*));
+    nom=(char*)malloc(60*sizeof(char*));
+    disponible=(char*)malloc(60*sizeof(char*));
+    date=(char*)malloc(60*sizeof(char*));
     lenght=strlen(temp);
     if(lenght<=20)
     {
         return;
     }
-    for(i=1;i<lenght-2;i++)
+    book_read++;
+    for(i=1;i<lenght-2;i++)     /*keep in memory the placement of the differrent info in the .txt*/
     {
         if(temp[i]==c)
         {   
@@ -212,19 +217,47 @@ int id_parts(struct etat_livre *Livre,char *temp,int book_read)/*dissassemble th
             pos2=i;
         }
     }
-    for(i=4;i<lenght-2;i++)
+    for(i=3;i<lenght-2;i++)     /*put the different character in the right array for RAM storage and remove useless empty space*/
     {
-        
-    }
+        if(temp[i]!="" && temp[i+1]!="")
+        {
+            
+            if(i<pos1-5)
+            {
+                nom[i-3]=temp[i];
+            }
+
+            if(i>pos1 && i<pos2)
+            {
+                disponible[u]=temp[i];
+                u++;
+            }
+            if(i>pos2)
+            {
+                date[t]=temp[i];
+                t++;
+            }
+        }
+    }  
+    strcpy(database->livre[book_read].nom,nom);
+    strcpy(database->livre[book_read].disponible,disponible);
+    strcpy(database->livre[book_read].date_retour,date);
+    free(nom);
+    free(disponible);
+    free(date);
+    
+    return;
+
 }
 
-int store_data(struct etat_livre *livre,int nb_ligne)/*store data in the struct for easier modification and add*/
+void store_data(Database *database)/*store data in the struct for easier modification and add*/
 {
     FILE *fptr;
     char *temp;
-    int book_read=1;
-    int error=0;
+    int book_read=0;
+    int error=0,i,lenght;
     temp=(char*)malloc(250*sizeof(char*));
+    
     fptr = fopen("Database.txt","r");
     if(fptr == NULL)
     {
@@ -232,11 +265,20 @@ int store_data(struct etat_livre *livre,int nb_ligne)/*store data in the struct 
     }
 
     while(fgets(temp,300,fptr)!=NULL)
-    {
-        printf("%s",temp);
-        id_parts(livre,temp,book_read);                                           /*send the current text string to being processed and stored*/
-        book_read++;
+    {   
+        id_parts(database,temp,book_read);                                           /*send the current text string to being processed and stored*/
+        lenght=strlen(temp);
+        if(lenght>5)
+        {
+            book_read++;
+        }
     }
+   /* printf("---------------------------------");
+    for(i=0;i<28;i++)
+    {
+        printf("\n%s",database->livre[i].disponible);
+    }
+    */
     free(temp);
     fclose(fptr);
 }
@@ -259,7 +301,6 @@ int checkfile_lenght()/*open file check for number of line and close*/
     nb_ligne=(nb_ligne/2)-1;
     free(test);
     fclose(fptr);
-
     return nb_ligne;
 }
 
