@@ -1,6 +1,7 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 #include <stdlib.h>
+#include <ctype.h>
 
 
 
@@ -9,6 +10,7 @@
 
 struct etat_livre{
     char nom[60];
+    char nom_recherche[60];
     char disponible[60];
     char date_retour[60];
     int lenght;

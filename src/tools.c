@@ -194,12 +194,13 @@ void id_parts(Database* database,char *temp,int book_read)/*dissassemble the dif
 {                              /*ex: name | status | date de retour */
     int lenght=0;
     int pos1=0,pos2=0,i=0,u=0,t=0;
-    char *nom,*disponible,*date;
+    char *nom,*nom_recherche,*disponible,*date;
     char c={'|'};
     char *interim;
     nom=(char*)malloc(60*sizeof(char*));
     disponible=(char*)malloc(60*sizeof(char*));
     date=(char*)malloc(60*sizeof(char*));
+    nom_recherche=(char*)malloc(60*sizeof(char*));
     lenght=strlen(temp);
     if(lenght<=20)
     {
@@ -223,8 +224,17 @@ void id_parts(Database* database,char *temp,int book_read)/*dissassemble the dif
         {
             
             if(i<pos1-5)
-            {
+            {   
+                
                 nom[i-3]=temp[i];
+                if(isupper(temp[i]))                /*transform uppercase to lowercase for research function*/
+                {
+                    nom_recherche[i-3]=nom[i-3]+32;   
+                }
+                else
+                {
+                    nom_recherche[i-3]=temp[i];
+                }
             }
 
             if(i>pos1 && i<pos2)
@@ -242,7 +252,9 @@ void id_parts(Database* database,char *temp,int book_read)/*dissassemble the dif
     strcpy(database->livre[book_read].nom,nom);
     strcpy(database->livre[book_read].disponible,disponible);
     strcpy(database->livre[book_read].date_retour,date);
+    strcpy(database->livre[book_read].nom_recherche,nom_recherche);
     free(nom);
+    free(nom_recherche);
     free(disponible);
     free(date);
     
@@ -273,12 +285,6 @@ void store_data(Database *database)/*store data in the struct for easier modific
             book_read++;
         }
     }
-   /* printf("---------------------------------");
-    for(i=0;i<28;i++)
-    {
-        printf("\n%s",database->livre[i].disponible);
-    }
-    */
     free(temp);
     fclose(fptr);
 }
@@ -304,13 +310,36 @@ int checkfile_lenght()/*open file check for number of line and close*/
     return nb_ligne;
 }
 
-/*convert ascii letter from upper to lower =+32 on ascii code*/
-/*    char book[30];
-    printf("nom du livre: ");
-    fgets(book,30,stdin);
-
-    printf("book is: %s",book);*/
-
+void add_book(Database *database)
+{
+    char *temp;
+    int lenght,i;
+    temp=(char*)malloc(100*sizeof(char*));
+    printf("Quel est le nom de livre et nom de l'auteur a ajouter a la base de donnée?");
+    scanf("%s",temp);
+    if(strlen(temp)>65)
+    {
+        printf("Nom trop long");
+        return;
+    }
+    /*if book name is valid add to database*/
+    
+    database->nb_livre++;
+    database->livre = (Livre*)realloc(database->nb_livre * sizeof(Livre));
+    
+    if(database->livre == NULL)
+    {
+        printf("error");
+        return;
+    }
+    
+    for(i=0;database->nb_livre>=i;i++)
+    {
+        printf("%s",database->livre[i].nom);
+    }
+    lenght=strlen(temp);
+    free(temp);
+}
 /*
 void search()/*recherche les livres dans la database*//*
 {   
@@ -323,10 +352,5 @@ void search()/*recherche les livres dans la database*//*
     printf("%d %s\n",sizelook,look);
     look=malloc(sizelook+1 * sizeof(char));
     reducer(*look);
-}
-*//*
-void reducer(char *look)/*goes trough a string a convert uppercase to lower case*//*
-{                                 /*to facilitate the search process*//*
-    printf("1- %s",look);
 }
 */

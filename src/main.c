@@ -24,8 +24,10 @@ database.livre = (Livre*)malloc(database.nb_livre * sizeof(Livre));
 if(database.livre == NULL)
 {
     printf("error");
+    return;
 }
 
-store_data(&database);
+//store_data(&database);
+add_book(&database);
 
 } 
