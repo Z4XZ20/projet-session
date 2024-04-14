@@ -369,15 +369,13 @@ void menu_default()
     printf("│  ╔═══════════════════════════════════╗    │\n");
     printf("│  ║ 1. Rechercher                     ║    │\n");
     printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 2. Emprunt                        ║    │\n");
+    printf("│  ║ 2. Ajout de livre                 ║    │\n");
     printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 3. Retour                         ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ║ 3. Quitter                        ║    │\n");
     printf("│  ╚═══════════════════════════════════╝    │\n");
     printf("└───────────────────────────────────────────┘\n");
 
-    printf("Veuillez selectionner l'une des quatre options suivantes :");
+    printf("Veuillez selectionner l'une des trois options suivantes :");
     
     do{ 
     
@@ -393,18 +391,13 @@ void menu_default()
 
         case '2':
         system("clear");
-        emprunt_menu();
+        ajoutLivre();
         break;
 
         case '3':
         system("clear");
-        retour_menu();
+        quitter();
         break;
-
-        case '4':
-        system("clear");
-        quitter_menu();
-        return 0;
     }
     } 
     
@@ -418,89 +411,160 @@ void rechercher_menu()
     printf("┌───────────────────────────────────────────┐\n");
     printf("│                                           │\n");
     printf("│       ╔═══════════════════════════╗       │\n");
-    printf("│       ║    BIENVENUE À LA         ║       │\n");
-    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ║        RECHERCHER         ║       │\n");
     printf("│       ╚═══════════════════════════╝       │\n");
     printf("│                                           │\n");
-    printf("│  ╔═══════════════════════════════════╗    │\n");
-    printf("│  ║ 1. Rechercher               ║║║║║ ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 2. Emprunt                        ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 3. Retour                         ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 4. Quitter                        ║    │\n");
-    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
     printf("└───────────────────────────────────────────┘\n");
+ 
+ while (getchar() != '\n');
+ resultats_recherche();
+
 }
 
 
-
-void emprunt_menu()
+void resultats_recherche()
 {
+    system("clear");
     printf("┌───────────────────────────────────────────┐\n");
     printf("│                                           │\n");
     printf("│       ╔═══════════════════════════╗       │\n");
-    printf("│       ║    BIENVENUE À LA         ║       │\n");
-    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ║   5 meilleurs résultats   ║       │\n");
     printf("│       ╚═══════════════════════════╝       │\n");
     printf("│                                           │\n");
-    printf("│  ╔═══════════════════════════════════╗    │\n");
-    printf("│  ║ 1. Rechercher                     ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 2. Emprunt                  ║║║║║ ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 3. Retour                         ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 4. Quitter                        ║    │\n");
-    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
+    printf("│                                           │\n");
     printf("└───────────────────────────────────────────┘\n");
+    
+    while (getchar() != '\n');
+    options();
+    
 }
 
-
-
-void retour_menu()
-{
+void options()
+{ 
+    int choix;
+    system("clear");
     printf("┌───────────────────────────────────────────┐\n");
     printf("│                                           │\n");
     printf("│       ╔═══════════════════════════╗       │\n");
-    printf("│       ║    BIENVENUE À LA         ║       │\n");
-    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ║     Voici vos options     ║       │\n");
     printf("│       ╚═══════════════════════════╝       │\n");
     printf("│                                           │\n");
     printf("│  ╔═══════════════════════════════════╗    │\n");
-    printf("│  ║ 1. Rechercher                     ║    │\n");
+    printf("│  ║ 1. Emprunter le livre             ║    │\n");
     printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 2. Emprunt                        ║    │\n");
+    printf("│  ║ 2. Retourner le livre             ║    │\n");
     printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 3. Retour                   ║║║║║ ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ║ 3. Menu principal                 ║    │\n");
     printf("│  ╚═══════════════════════════════════╝    │\n");
     printf("└───────────────────────────────────────────┘\n");
+    scanf("%d", &choix);
+    switch (choix)
+    {
+        
+        case '1':
+        system("clear");
+        emprunt();
+        break;
+
+        case '2':
+        system("clear");
+        retourner();
+        break;
+
+        case '3':
+        system("clear");
+        menu_default();
+        break;
+    }
 }
 
-
-
-void quitter_menu()
+void emprunt()
 {
-    printf("┌───────────────────────────────────────────┐\n");
-    printf("│                                           │\n");
-    printf("│       ╔═══════════════════════════╗       │\n");
-    printf("│       ║    BIENVENUE À LA         ║       │\n");
-    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
-    printf("│       ╚═══════════════════════════╝       │\n");
-    printf("│                                           │\n");
-    printf("│  ╔═══════════════════════════════════╗    │\n");
-    printf("│  ║ 1. Rechercher                     ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 2. Emprunt                        ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 3. Retour                         ║    │\n");
-    printf("│  ╟───────────────────────────────────╢    │\n");
-    printf("│  ║ 4. Quitter                  ║║║║║ ║    │\n");
-    printf("│  ╚═══════════════════════════════════╝    │\n");
-    printf("└───────────────────────────────────────────┘\n");
+ system("clear");
+    printf("┌───────────────────────────────────────────────────────────────┐\n");
+    printf("│                                                               │\n");
+    printf("│                     ╔═══════════════════════════╗             │\n");
+    printf("│                     ║  Confirmation d'emprunt   ║             │\n");
+    printf("│                     ╚═══════════════════════════╝             │\n");
+    printf("│                                                               │\n");
+    printf("│  Vous avez emprunter : %s                                     │\n", /*nomdulivre*/);
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("└───────────────────────────────────────────────────────────────┘\n");
 
-    printf("Merci d'avoir utilise la bibliotheque de l'UQTR\n");
 }
+
+void retourner()
+{
+system("clear");
+    printf("┌───────────────────────────────────────────────────────────────┐\n");
+    printf("│                                                               │\n");
+    printf("│                     ╔═══════════════════════════╗             │\n");
+    printf("│                     ║  Confirmation de retour   ║             │\n");
+    printf("│                     ╚═══════════════════════════╝             │\n");
+    printf("│                                                               │\n");
+    printf("│  Vous avez retourné : %s                                      │\n", /*nomdulivre*/);
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("└───────────────────────────────────────────────────────────────┘\n");
+
+
+}
+
+void ajoutLivre()
+{
+    printf("┌────────────────────────────────────────────────┐\n");
+    printf("│                                                │\n");
+    printf("│            ╔═══════════════════════════╗       │\n");
+    printf("│            ║     Ajouter un livre      ║       │\n");
+    printf("│            ╚═══════════════════════════╝       │\n");
+    printf("│                                                │\n");
+    printf("│  Veuillez entrer le nom du livre :             │\n");
+    printf("│                                                │\n");
+    printf("│                                                │\n");
+    printf("│                                                │\n");
+    printf("│                                                │\n");
+    printf("└────────────────────────────────────────────────┘\n");
+    while (getchar() != '\n');
+    confirmationAjout();
+
+}
+
+void confirmationAjout()
+{
+    system("clear");
+    printf("┌───────────────────────────────────────────────────────────────┐\n");
+    printf("│                                                               │\n");
+    printf("│                     ╔═══════════════════════════╗             │\n");
+    printf("│                     ║   Confirmation d'ajout    ║             │\n");
+    printf("│                     ╚═══════════════════════════╝             │\n");
+    printf("│                                                               │\n");
+    printf("│  Vous avez ajouté : %s                                        │\n", /*nomdulivre*/);
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("│                                                               │\n");
+    printf("└───────────────────────────────────────────────────────────────┘\n");
+
+}
+
+void quitter()
+{
+
+ printf("Merci d'avoir utilisé la bibliotheque UQTR");
+ exit(0);
+
+}
+
