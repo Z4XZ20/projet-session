@@ -4,6 +4,7 @@
 
 void main() {
 
+menu_default();
 
 int error_flag=0;
 Database database;

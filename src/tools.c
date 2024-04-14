@@ -354,3 +354,153 @@ void search()/*recherche les livres dans la database*//*
     reducer(*look);
 }
 */
+
+
+void menu_default()
+{
+    int option;
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║    BIENVENUE À LA         ║       │\n");
+    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("│  ╔═══════════════════════════════════╗    │\n");
+    printf("│  ║ 1. Rechercher                     ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 2. Emprunt                        ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 3. Retour                         ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("└───────────────────────────────────────────┘\n");
+
+    printf("Veuillez selectionner l'une des quatre options suivantes :");
+    
+    do{ 
+    
+    scanf("%c", &option);
+    
+    switch (option)
+    {
+        
+        case '1':
+        system("clear");
+        rechercher_menu();
+        break;
+
+        case '2':
+        system("clear");
+        emprunt_menu();
+        break;
+
+        case '3':
+        system("clear");
+        retour_menu();
+        break;
+
+        case '4':
+        system("clear");
+        quitter_menu();
+        return 0;
+    }
+    } 
+    
+    while (option !=5);
+
+    
+}
+
+void rechercher_menu()
+{
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║    BIENVENUE À LA         ║       │\n");
+    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("│  ╔═══════════════════════════════════╗    │\n");
+    printf("│  ║ 1. Rechercher               ║║║║║ ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 2. Emprunt                        ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 3. Retour                         ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("└───────────────────────────────────────────┘\n");
+}
+
+
+
+void emprunt_menu()
+{
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║    BIENVENUE À LA         ║       │\n");
+    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("│  ╔═══════════════════════════════════╗    │\n");
+    printf("│  ║ 1. Rechercher                     ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 2. Emprunt                  ║║║║║ ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 3. Retour                         ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("└───────────────────────────────────────────┘\n");
+}
+
+
+
+void retour_menu()
+{
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║    BIENVENUE À LA         ║       │\n");
+    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("│  ╔═══════════════════════════════════╗    │\n");
+    printf("│  ║ 1. Rechercher                     ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 2. Emprunt                        ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 3. Retour                   ║║║║║ ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("└───────────────────────────────────────────┘\n");
+}
+
+
+
+void quitter_menu()
+{
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║    BIENVENUE À LA         ║       │\n");
+    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("│  ╔═══════════════════════════════════╗    │\n");
+    printf("│  ║ 1. Rechercher                     ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 2. Emprunt                        ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 3. Retour                         ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 4. Quitter                  ║║║║║ ║    │\n");
+    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("└───────────────────────────────────────────┘\n");
+
+    printf("Merci d'avoir utilise la bibliotheque de l'UQTR\n");
+}

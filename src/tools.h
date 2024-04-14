@@ -35,6 +35,7 @@ void store_data(Database *database);
 void id_parts(Database *database,char *temp,int book_read);
 int reducer( char *text);
 int checkfile_lenght();
+void menu_default();
 
 
 
