@@ -4,17 +4,18 @@
 
 void main() {
 
-
-int error_flag=0;
+int error_flag=0,i;
 Database database;
-
+int *match;
 /*check if the .txt is empty*/
-database.nb_livre=checkfile_lenght();
 
-if(database.nb_livre==0)
+database.nb_livre = checkfile_lenght();
+
+if(database.nb_livre<5)
 {   
     /*if empty then we write database*/
     write_database();
+    database.nb_livre = checkfile_lenght();
 }
 
     /*putting the database in RAM for easier mpdification*/
@@ -27,7 +28,21 @@ if(database.livre == NULL)
     return;
 }
 
-//store_data(&database);
-add_book(&database);
+store_data(&database);
+
+match=search_book(&database);
+for(i=1;i<=match[0];i++)
+{
+    printf("%d ",match[i]);
+}
+//add_book(&database);
+
+//remove_book(&database,match);
+
+//rent_a_book(&database,match);
+
+//return_book(&database,match);
+
+save_change(&database);
 
 } 

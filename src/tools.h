@@ -1,12 +1,10 @@
 #ifndef TOOLS_H
 #define TOOLS_H
-#include <stdlib.h>
 #include <ctype.h>
-
-
-
-
-// insert CODE here 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 struct etat_livre{
     char nom[60];
@@ -26,16 +24,18 @@ struct database{
 typedef struct database Database;
 
 
-
 void write_database();
-const char* book_inv(int i);
-int stringcounter();
-void search();
 void store_data(Database *database);
 void id_parts(Database *database,char *temp,int book_read);
-int reducer( char *text);
+const char* book_inv(int i);
+int stringcounter();
 int checkfile_lenght();
-
+int *compare(Database *database,char *temp);
+int *search_book(Database *database);
+void rent_a_book(Database *database,int* match);
+void return_book(Database *database,int* match);
+void add_book(Database *database);
+void remove_book(Database *database,int* match);
 
 
 #endif

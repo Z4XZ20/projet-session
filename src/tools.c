@@ -1,7 +1,4 @@
 #include "../src/tools.h"
-#include<stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 
 
@@ -35,7 +32,7 @@ const char* book_inv(int i) /*contains all the book names*/
     
         break;
         case 6:;
-            *book_name= " Dream of the Red Chamber ,Cao Xueqin";
+            *book_name= "Dream of the Red Chamber ,Cao Xueqin";
     
         break;
         case 7:;
@@ -83,7 +80,7 @@ const char* book_inv(int i) /*contains all the book names*/
     
         break;
         case 18:;
-            *book_name= " Harry Potter and the Deathly Hallows ,J.K. Rowling";
+            *book_name= "Harry Potter and the Deathly Hallows ,J.K. Rowling";
     
         break;
         case 19:;
@@ -163,7 +160,7 @@ void write_database() /*open file and overwrite database at start if database do
         {
             fprintf(fptr," ");
         }
-        fprintf(fptr,"|   0   |       --       |\n");
+        fprintf(fptr,"|   0   |    --    |\n");
     }
     fclose(fptr);
 }
@@ -207,7 +204,7 @@ void id_parts(Database* database,char *temp,int book_read)/*dissassemble the dif
         return;
     }
     book_read++;
-    for(i=1;i<lenght-2;i++)     /*keep in memory the placement of the differrent info in the .txt*/
+    for(i=1;i<lenght-2;i++)     /*keep in memory the placement of the different info in the .txt*/
     {
         if(temp[i]==c)
         {   
@@ -225,16 +222,23 @@ void id_parts(Database* database,char *temp,int book_read)/*dissassemble the dif
             
             if(i<pos1-5)
             {   
-                
-                nom[i-3]=temp[i];
-                if(isupper(temp[i]))                /*transform uppercase to lowercase for research function*/
+                 if(isupper(temp[i]))                /*transform uppercase to lowercase for research function*/
                 {
-                    nom_recherche[i-3]=nom[i-3]+32;   
+                    nom_recherche[i-3]=temp[i]+32; 
                 }
                 else
                 {
                     nom_recherche[i-3]=temp[i];
                 }
+                if(book_read>10)
+                {
+                   nom[i-3]=temp[i+1]; 
+                }
+                else
+                {
+                   nom[i-3]=temp[i];  
+                }
+ 
             }
 
             if(i>pos1 && i<pos2)
@@ -248,7 +252,8 @@ void id_parts(Database* database,char *temp,int book_read)/*dissassemble the dif
                 t++;
             }
         }
-    }  
+    } 
+
     strcpy(database->livre[book_read].nom,nom);
     strcpy(database->livre[book_read].disponible,disponible);
     strcpy(database->livre[book_read].date_retour,date);
@@ -304,53 +309,367 @@ int checkfile_lenght()/*open file check for number of line and close*/
     {
         nb_ligne++;
     }
-    nb_ligne=(nb_ligne/2)-1;
+    nb_ligne=(nb_ligne/2);
     free(test);
     fclose(fptr);
     return nb_ligne;
 }
 
-void add_book(Database *database)
+void add_book(Database *database)/*add book to RAM storage*/
 {
-    char *temp;
-    int lenght,i;
+    char *temp,*array_disp,*array_date;
+    int length,i;
+    
     temp=(char*)malloc(100*sizeof(char*));
+    array_disp=(char*)malloc(100*sizeof(char*));
+    array_date=(char*)malloc(100*sizeof(char*));
+    array_disp="   0   ";
+    array_date="    --    ";
     printf("Quel est le nom de livre et nom de l'auteur a ajouter a la base de donnée?");
-    scanf("%s",temp);
-    if(strlen(temp)>65)
+    scanf(" %[^\n]%*c", temp);
+    /*if book name is valid add to database*/
+    database->nb_livre++;
+    strcpy(database->livre[database->nb_livre].nom,temp);
+    strcpy(database->livre[database->nb_livre].disponible,array_disp);
+    strcpy(database->livre[database->nb_livre].date_retour,array_date);
+    free(temp);
+    free(array_disp);
+    free(array_date);
+}
+
+void remove_book(Database *database,int* match)/*remove book from RAM storage*/
+{
+    int select,i;
+    for(i=1;i<=match[0];i++)
     {
-        printf("Nom trop long");
-        return;
+        printf("%d- %s\n",i,database->livre[match[i]].nom);
+    }
+    
+    printf("Select the book you mean to remove(enter number ,0 to escape):");
+    scanf("%d",&select);
+    if(select>match[0]||select<=0)             //error
+    {
+        printf("\nwrong choice");
+        return 1;
     }
     /*if book name is valid add to database*/
-    
-    database->nb_livre++;
-    database->livre = (Livre*)realloc(database->nb_livre * sizeof(Livre));
-    
-    if(database->livre == NULL)
+
+    strcpy(database->livre[match[select]].nom,"\0");
+    strcpy(database->livre[match[select]].disponible,"\0");
+    strcpy(database->livre[match[select]].date_retour,"\0");
+
+    for(i=match[select];i<=database->nb_livre;i++)
     {
-        printf("error");
+            strcpy(database->livre[i].nom,database->livre[i+1].nom);
+            strcpy(database->livre[i].disponible,database->livre[i+1].disponible);
+            strcpy(database->livre[i].date_retour,database->livre[i+1].date_retour);
+    }
+    database->nb_livre--;
+}
+
+int* search_book(Database *database)/*search book in RAM storage*/
+{
+    char *temp;
+    int i,length,id;
+    int *match;
+    temp=(int*)malloc(20*sizeof(int*));
+    printf("\n Quel livre rechercher vous? :");
+    scanf(" %[^\n]%*c", temp);
+    length=strlen(temp);
+    if(length<=3)
+    {
+        printf("\n-----------name too short-----------\n");
+        return 1;
+    }
+
+    for(i=0;i<length;i++)
+    {
+        if(isupper(temp[i]))
+        {
+            temp[i]=temp[i]+32;
+        }
+    }
+
+
+    match=compare(database,temp);
+        
+}
+
+int *compare(Database *database,char *temp)/*compare string*/
+{
+    int i,u=1,length;
+    char *id;
+    int *match;
+    match=(int*)malloc(5*sizeof(int*));
+    for(i=0;i<database->nb_livre+1;i++)
+    {
+        id=strstr(database->livre[i].nom_recherche,temp);
+        if(id == NULL)
+        { 
+            //nothing happens
+        }
+        else
+        {
+            match[u]=i;
+        
+            u++; 
+            if(u>5) 
+            {
+                match[0]=u-1;
+                return match;
+            }
+        }
+    }
+    match[0]=u-1;
+    length=strlen(temp);
+    if(match[0]<=0)
+    {   
+        temp[length-1] = '\0';
+        length--;
+        match=compare(database,temp);
+    }
+    return match;
+}
+
+void rent_a_book(Database *database,int* match)/*rent a specified book for 1 week*/
+{
+    int i,select;
+    char id=0;
+    time_t current_time = time(NULL);
+    struct tm *timeStruct = localtime(&current_time);
+    timeStruct->tm_mday += 7;
+    time_t modifiedTime = mktime(timeStruct);
+    char return_time[20];
+    strftime(return_time, sizeof(return_time), "%Y-%m-%d", timeStruct);
+    for(i=1;i<=match[0];i++)
+    {
+        printf("%d- %s\n",i,database->livre[match[i]].nom);
+    }
+    printf("Select the book you mean to rent(enter number ,0 to escape):");
+    scanf("%d",&select);
+    if(select>match[0]||select<=0)             //error
+    {
+        printf("\nwrong choice");
+        return 1;
+    }
+
+    printf("\n- %s\n",database->livre[match[select]].nom);
+    
+    for(i=0;i<7;i++)
+    {
+        if(database->livre[match[select]].disponible[i]=='1')
+        {
+            id++;
+        }
+    }
+
+    if(id>0)
+    {
+        printf("\nle livre est emprunter jusqu'aux: %s\n",database->livre[match[select]].date_retour);
+
         return;
     }
-    
-    for(i=0;database->nb_livre>=i;i++)
+    else
     {
-        printf("%s",database->livre[i].nom);
+        printf("\nlivre empunter avec succès!");
+        strcpy(database->livre[match[select]].disponible,"   1   ");
+
+        strcpy(database->livre[match[select]].date_retour,return_time);
+
+        return;
     }
-    lenght=strlen(temp);
-    free(temp);
+
 }
-/*
-void search()/*recherche les livres dans la database*//*
+
+void return_book(Database *database,int* match)/*return a rented book and id if return late*/
+{
+    char date[25];
+    time_t current_time = time(NULL);
+    strftime(date, 25, "%Y-%m-%d", localtime(&current_time));
+    int current_day,current_month,book_month,book_day,i,length,select,id=0;
+    
+        for(i=1;i<=match[0];i++)
+    {
+        printf("%d- %s\n",i,database->livre[match[i]].nom);
+    }
+    printf("Select the book you mean to return(enter number ,0 to escape):");
+    scanf("%d",&select);
+    if(select>match[0]||select<=0)             //error
+    {
+        printf("\nwrong choice");
+        return 1;
+    }
+    
+    for(i=0;i<7;i++)
+    {
+        if(database->livre[match[select]].disponible[i]=='0')
+        {
+            id++;
+        }
+    }
+
+    if(id>0)
+    {
+        printf("\nle livre n'est pas emprunter ");
+
+        return;
+    }
+    //extract the return date month day and put them in decimal for actual date
+    length=strlen(date);
+    for(i=0;i<=length;i++)
+    {
+            if(i==5)
+            {
+                current_month = (date[i]-48) *10;
+            }
+            if(i==6)
+            {
+                current_month = current_month + (date[i]-48);
+            }
+
+            if(i==8)
+            {
+                current_day = (date[i]-48) *10;
+            }
+            if(i==9)
+            {
+                current_day = current_day + (date[i]-48);
+            }
+    }
+    //extract the return date month day and put them in decimal for selected book
+    length=strlen(database->livre[match[select]].date_retour);
+    for(i=0;i<=length;i++)
+    {
+            if(i==5)
+            {
+                book_month = (database->livre[match[select]].date_retour[i]-48) *10;
+            }
+            if(i==6)
+            {
+                book_month = book_month + (database->livre[match[select]].date_retour[i]-48);
+            }
+
+            if(i==8)
+            {
+                book_day = (database->livre[match[select]].date_retour[i]-48) *10;
+            }
+            if(i==9)
+            {
+                book_day = book_day + (database->livre[match[select]].date_retour[i]-48);
+            }
+    }
+
+    strcpy(database->livre[match[select]].disponible,"   0   ");
+
+    strcpy(database->livre[match[select]].date_retour,"    --    ");
+
+    if(book_month==current_month)
+    {
+        if(current_day>book_day)
+        {
+            printf("\nretour de livre en retard, penalité appliquer");
+        }
+    }
+    else
+    {
+        if(current_month>book_month)
+        {
+            printf("\nretour de livre en retard, penalité appliquer");
+        }
+    }
+
+}
+
+void save_change(Database *database)/*save change in database .txt file*/
 {   
-    const int standard=100;
-    char *look;
-    char sizelook=0;
-    look=malloc(standard * sizeof(char));       /* give standard value before resizing to right size*//*
-    scanf("%s",look);
-    sizelook=stringcounter(look);
-    printf("%d %s\n",sizelook,look);
-    look=malloc(sizelook+1 * sizeof(char));
-    reducer(*look);
+    int i,temp;
+    FILE *fptr;  
+    fptr = fopen("Database.txt","w");
+    fprintf(fptr,"   nom du livre                                                 |status | Date de retour |\n");
+    for(i=2;i<=database->nb_livre;i++)
+    {   
+        fprintf(fptr,"\n%d- %s",i-1,database->livre[i].nom);
+        temp=strlen(database->livre[i].nom);
+        for(temp=60-temp;temp>0;temp--)
+        {
+            fprintf(fptr," ");
+        }
+        fprintf(fptr,"|%s|",database->livre[i].disponible);
+        fprintf(fptr,"%s|\n",database->livre[i].date_retour);
+        
+    }
+    fclose(fptr);
 }
+
+/*
+int* search_book(Database *database)
+{
+    char *temp;
+    int i,length,id;
+    int *match;
+    temp=(int*)malloc(20*sizeof(int*));
+    printf("\n Quel livre rechercher vous? :");
+    scanf(" %[^\n]%*c", temp);
+    length=strlen(temp);
+    if(length<=3)
+    {
+        printf("\n-----------name too short-----------\n");
+        return 1;
+    }
+
+    for(i=0;i<length;i++)
+    {
+        if(isupper(temp[i]))
+        {
+            temp[i]=temp[i]+32;
+        }
+    }
+
+    id=length-3;
+
+    for(i=0;i<=id;i++)
+    {
+        match=compare(database,temp);
+        if(match[0]==NULL)
+        {
+            temp[length-1] = '\0';
+            length--;
+        }
+        else
+        {
+            return match;
+        }
+    }
+    return 0;  
+}
+
+int *compare(Database *database,char *temp)
+{
+    int i,u=1;
+    char *id;
+    int *match;
+    match=(int*)malloc(5*sizeof(int*));
+    for(i=0;i<database->nb_livre+1;i++)
+    {
+        id=strstr(database->livre[i].nom_recherche,temp);
+        if(id == NULL)
+        { 
+            
+        }
+        else
+        {
+            match[u]=i;
+        
+            u++; 
+            if(u>5) 
+            {
+                match[0]=u-1;
+                return match;
+            }
+        }
+    }
+    match[0]=u-1;
+    return match;
+}
+
 */
