@@ -1,61 +1,61 @@
    nom du livre                                                 |status | Date de retour |
 
-1- Don Quixote ,Miguel de Cervantes                             |   0   |       --       |
+1- Don Quixote ,Miguel de Cervantes                            |   0   |    --    |
 
-2- A Tale of Two Cities ,Charles Dickens                        |   0   |       --       |
+2- A Tale of Two Cities ,Charles Dickens                       |   0   |    --    |
 
-3- Le Petit Prince ,Antoine de Saint-Exupery                    |   0   |       --       |
+3- Le Petit Prince ,Antoine de Saint-Exupery                   |   0   |    --    |
 
-4- Harry Potter and the Sorcerer's Stone ,J.K. Rowling          |   0   |       --       |
+4- Harry Potter and the Sorcerer's Stone ,J.K. Rowling         |   0   |    --    |
 
-5- And Then There Were None ,Agatha Christie                    |   0   |       --       |
+5- And Then There Were None ,Agatha Christie                   |   0   |    --    |
 
-6- Dream of the Red Chamber ,Cao Xueqin                         |   0   |       --       |
+6- Dream of the Red Chamber ,Cao Xueqin                        |   0   |    --    |
 
-7- The Hobbit ,J.R.R. Tolkien                                   |   0   |       --       |
+7- The Hobbit ,J.R.R. Tolkien                                  |   0   |    --    |
 
-8- The Lion, the Witch and the Wardrobe ,C.S. Lewis             |   0   |       --       |
+8- The Lion, the Witch and the Wardrobe ,C.S. Lewis            |   0   |    --    |
 
-9- She: A History of Adventure ,H. Rider Haggard                |   0   |       --       |
+9- She: A History of Adventure ,H. Rider Haggard               |   0   |    --    |
 
-10- Vardi Wala Gunda ,Ved Prakash Sharma                        |   0   |       --       |
+10- Vardi Wala Gunda ,Ved Prakash Sharma                        |   0   |    --    |
 
-11- The Da Vinci Code ,Dan Brown                                |   0   |       --       |
+11- The Da Vinci Code ,Dan Brown                                |   0   |    --    |
 
-12- Harry Potter and the Chamber of Secrets ,J.K. Rowling       |   0   |       --       |
+12- Harry Potter and the Chamber of Secrets ,J.K. Rowling       |   0   |    --    |
 
-13- The Alchemist ,Paulo Coelho                                 |   0   |       --       |
+13- The Alchemist ,Paulo Coelho                                 |   0   |    --    |
 
-14- Harry Potter and the Prisoner of Azkaban ,J.K. Rowling      |   0   |       --       |
+14- Harry Potter and the Prisoner of Azkaban ,J.K. Rowling      |   0   |    --    |
 
-15- Harry Potter and the Goblet of Fire ,J.K. Rowling           |   0   |       --       |
+15- Harry Potter and the Goblet of Fire ,J.K. Rowling           |   0   |    --    |
 
-16- Harry Potter and the Order of the Phoenix ,J.K. Rowling     |   0   |       --       |
+16- Harry Potter and the Order of the Phoenix ,J.K. Rowling     |   0   |    --    |
 
-17- Harry Potter and the Half-Blood Prince ,J.K. Rowling        |   0   |       --       |
+17- Harry Potter and the Half-Blood Prince ,J.K. Rowling        |   0   |    --    |
 
-18-  Harry Potter and the Deathly Hallows ,J.K. Rowling         |   0   |       --       |
+18- Harry Potter and the Deathly Hallows ,J.K. Rowling          |   0   |    --    |
 
-19- The Catcher in the Rye , J.D. Salinger                      |   0   |       --       |
+19- The Catcher in the Rye , J.D. Salinger                      |   0   |    --    |
 
-20- The Bridges of Madison County ,Robert James Waller          |   0   |       --       |
+20- The Bridges of Madison County ,Robert James Waller          |   0   |    --    |
 
-21- Ben-Hur: A Tale of the Christ ,Lew Wallace                  |   0   |       --       |
+21- Ben-Hur: A Tale of the Christ ,Lew Wallace                  |   0   |    --    |
 
-22- One Hundred Years of Solitude ,Gabriel Garcia Marquez       |   0   |       --       |
+22- One Hundred Years of Solitude ,Gabriel Garcia Marquez       |   0   |    --    |
 
-23- Lolita ,Vladimir Nabokov                                    |   0   |       --       |
+23- Lolita ,Vladimir Nabokov                                    |   0   |    --    |
 
-24- Heidi ,Johanna Spyri                                        |   0   |       --       |
+24- Heidi ,Johanna Spyri                                        |   0   |    --    |
 
-25- Anne of Green Gables ,Lucy Maud Montgomery                  |   0   |       --       |
+25- Anne of Green Gables ,Lucy Maud Montgomery                  |   0   |    --    |
 
-26- Black Beauty ,Anna Sewell                                   |   0   |       --       |
+26- Black Beauty ,Anna Sewell                                   |   0   |    --    |
 
-27- The Name of the Rose ,Umberto Eco                           |   0   |       --       |
+27- The Name of the Rose ,Umberto Eco                           |   0   |    --    |
 
-28- The Eagle Has Landed ,Jack Higgins                          |   0   |       --       |
+28- The Eagle Has Landed ,Jack Higgins                          |   0   |    --    |
 
-29- Watership Down ,Richard Adams                               |   0   |       --       |
+29- Watership Down ,Richard Adams                               |   0   |    --    |
 
-30- Charlotte's Web ,E.B. White                                 |   0   |       --       |
+30- Charlotte's Web ,E.B. White                                 |   0   |    --    |
