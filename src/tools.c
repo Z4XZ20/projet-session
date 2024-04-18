@@ -321,20 +321,20 @@ void add_book(Database *database)/*add book to RAM storage*/
     int length,i;
     
     temp=(char*)malloc(100*sizeof(char*));
-    array_disp=(char*)malloc(100*sizeof(char*));
-    array_date=(char*)malloc(100*sizeof(char*));
+    array_disp=(char*)malloc(15*sizeof(char*));
+    array_date=(char*)malloc(15*sizeof(char*));
     array_disp="   0   ";
     array_date="    --    ";
-    printf("Quel est le nom de livre et nom de l'auteur a ajouter a la base de donnée?");
+    printf("Quel est le nom de livre et nom de l'auteur a ajouter a la base de donnée:");
     scanf(" %[^\n]%*c", temp);
     /*if book name is valid add to database*/
+
     database->nb_livre++;
     strcpy(database->livre[database->nb_livre].nom,temp);
     strcpy(database->livre[database->nb_livre].disponible,array_disp);
     strcpy(database->livre[database->nb_livre].date_retour,array_date);
-    free(temp);
-    free(array_disp);
-    free(array_date);
+    printf("\nLe livre a bien ete ajouter!");
+
 }
 
 void remove_book(Database *database,int* match)/*remove book from RAM storage*/
@@ -352,7 +352,7 @@ void remove_book(Database *database,int* match)/*remove book from RAM storage*/
         printf("\nwrong choice");
         return 1;
     }
-    /*if book name is valid add to database*/
+    /*if book name is valid remove to database*/
 
     strcpy(database->livre[match[select]].nom,"\0");
     strcpy(database->livre[match[select]].disponible,"\0");
@@ -365,6 +365,7 @@ void remove_book(Database *database,int* match)/*remove book from RAM storage*/
             strcpy(database->livre[i].date_retour,database->livre[i+1].date_retour);
     }
     database->nb_livre--;
+    printf("\nLe livre a bien ete supprimer!");
 }
 
 int* search_book(Database *database)/*search book in RAM storage*/
@@ -389,7 +390,6 @@ int* search_book(Database *database)/*search book in RAM storage*/
             temp[i]=temp[i]+32;
         }
     }
-
 
     match=compare(database,temp);
         
@@ -441,16 +441,14 @@ void rent_a_book(Database *database,int* match)/*rent a specified book for 1 wee
     time_t modifiedTime = mktime(timeStruct);
     char return_time[20];
     strftime(return_time, sizeof(return_time), "%Y-%m-%d", timeStruct);
-    for(i=1;i<=match[0];i++)
-    {
-        printf("%d- %s\n",i,database->livre[match[i]].nom);
-    }
-    printf("Select the book you mean to rent(enter number ,0 to escape):");
+
+    printf("\nselectionnez le livre a emprunter(entrez le numero ,0 pour quitter ce menu):");
     scanf("%d",&select);
     if(select>match[0]||select<=0)             //error
     {
         printf("\nwrong choice");
-        return 1;
+        if(select==0)
+        {return;}
     }
 
     printf("\n- %s\n",database->livre[match[select]].nom);
@@ -466,17 +464,18 @@ void rent_a_book(Database *database,int* match)/*rent a specified book for 1 wee
     if(id>0)
     {
         printf("\nle livre est emprunter jusqu'aux: %s\n",database->livre[match[select]].date_retour);
-
-        return;
+        
     }
     else
     {
-        printf("\nlivre empunter avec succès!");
+        printf("\nlivre empunter avec succès! date de retour: %s", return_time);
+        
+        
         strcpy(database->livre[match[select]].disponible,"   1   ");
-
+        
+        
         strcpy(database->livre[match[select]].date_retour,return_time);
 
-        return;
     }
 
 }
@@ -487,17 +486,13 @@ void return_book(Database *database,int* match)/*return a rented book and id if 
     time_t current_time = time(NULL);
     strftime(date, 25, "%Y-%m-%d", localtime(&current_time));
     int current_day,current_month,book_month,book_day,i,length,select,id=0;
-    
-        for(i=1;i<=match[0];i++)
-    {
-        printf("%d- %s\n",i,database->livre[match[i]].nom);
-    }
-    printf("Select the book you mean to return(enter number ,0 to escape):");
+    printf("selectionnez le livre a retourner(entrez le numero ,0 pour quitter ce menu):");
     scanf("%d",&select);
     if(select>match[0]||select<=0)             //error
     {
         printf("\nwrong choice");
-        return 1;
+        if(select==0)
+        {return;}
     }
     
     for(i=0;i<7;i++)
@@ -559,6 +554,8 @@ void return_book(Database *database,int* match)/*return a rented book and id if 
             }
     }
 
+        printf("\nLivre retouner avec succes!");
+
     strcpy(database->livre[match[select]].disponible,"   0   ");
 
     strcpy(database->livre[match[select]].date_retour,"    --    ");
@@ -600,76 +597,142 @@ void save_change(Database *database)/*save change in database .txt file*/
     }
     fclose(fptr);
 }
- 
-/*
-int* search_book(Database *database)
+
+void menu_default()  /*main menu and call next page*/
 {
-    char *temp;
-    int i,length,id;
-    int *match;
-    temp=(int*)malloc(20*sizeof(int*));
-    printf("\n Quel livre rechercher vous? :");
-    scanf(" %[^\n]%*c", temp);
-    length=strlen(temp);
-    if(length<=3)
-    {
-        printf("\n-----------name too short-----------\n");
-        return 1;
-    }
-
-    for(i=0;i<length;i++)
-    {
-        if(isupper(temp[i]))
-        {
-            temp[i]=temp[i]+32;
-        }
-    }
-
-    id=length-3;
-
-    for(i=0;i<=id;i++)
-    {
-        match=compare(database,temp);
-        if(match[0]==NULL)
-        {
-            temp[length-1] = '\0';
-            length--;
-        }
-        else
-        {
-            return match;
-        }
-    }
-    return 0;  
+    char option;
+    system("clear");
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║    BIENVENUE À LA         ║       │\n");
+    printf("│       ║    BIBLIOTHÈQUE UQTR      ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("│  ╔═══════════════════════════════════╗    │\n");
+    printf("│  ║ 1. Rechercher                     ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 2. Ajout de livre                 ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 3. Suppresion de livre            ║    │\n");
+    printf("│  ╟───────────────────────────────────╢    │\n");
+    printf("│  ║ 4. Quitter                        ║    │\n");
+    printf("│  ╚═══════════════════════════════════╝    │\n");
+    printf("└───────────────────────────────────────────┘\n");
+    printf("appuyer sur '0' en cas d'erreur avec la base de données\n");
+    printf("Veuillez selectionner l'une des quatres options suivantes :\n");
+    
 }
 
-int *compare(Database *database,char *temp)
+void rechercher_menu()
 {
-    int i,u=1;
-    char *id;
-    int *match;
-    match=(int*)malloc(5*sizeof(int*));
-    for(i=0;i<database->nb_livre+1;i++)
-    {
-        id=strstr(database->livre[i].nom_recherche,temp);
-        if(id == NULL)
-        { 
-            
-        }
-        else
+    system("clear");
+    printf("┌───────────────────────────────────────────┐\n");
+    printf("│                                           │\n");
+    printf("│       ╔═══════════════════════════╗       │\n");
+    printf("│       ║        RECHERCHER         ║       │\n");
+    printf("│       ╚═══════════════════════════╝       │\n");
+    printf("│                                           │\n");
+    printf("└───────────────────────────────────────────┘\n");
+
+}
+
+void resultats_recherche(Database *database,int *match)
+{
+    int spaces,i,choice=0,out=0;
+    system("clear");
+    printf("┌────────────────────────────────────────────────────────────┐\n");
+    printf("│                                                            │\n");
+    printf("│               ╔═══════════════════════════╗                │\n");
+    printf("│               ║   5 meilleurs résultats   ║                │\n");
+    printf("│               ╚═══════════════════════════╝                │\n");
+
+    if(match[0]>0)
+    {   
+        for(i=1;match[0]>=i;i++)
         {
-            match[u]=i;
-        
-            u++; 
-            if(u>5) 
+            printf("│%d-%s",i,database->livre[match[i]].nom);   
+            spaces=stringcounter(database->livre[match[i]].nom);
+            while(spaces<58)
             {
-                match[0]=u-1;
-                return match;
+                printf(" ");
+                spaces++;
             }
+            printf("│\n");
         }
     }
-    match[0]=u-1;
-    return match;
+    else
+    {
+    printf("│       -------------aucun livre trouver-------------        │\n");
+    printf("└────────────────────────────────────────────────────────────┘\n");
+    }
+
+    printf("│                                                            │\n");
+    printf("└────────────────────────────────────────────────────────────┘\n");
+    printf("Quel action voulez vous effectuer (1=louer livre) (2=retourner livre) :");
+ 
+    do
+    {
+        scanf("%d",&choice);
+        if(choice==1||choice==2)
+        {
+            out++;
+        }
+        else
+        {
+        printf("\nValeur non valide, entrez a nouveau:");
+        }
+    }
+    while(out==0);
+    
+    if(choice==1)
+    {
+        rent_a_book(database,match);
+        printf("\nEntrer une valeur pour continuer(ex: 1-9):");
+        scanf("%d",&out);
+    }
+    if(choice==2)
+    {
+        return_book(database,match);
+        printf("\nEntrer une valeur pour continuer(ex: 1-9):");
+        scanf("%d",&out);
+    }
 }
 
-*/
+void ajoutLivre(Database *database)
+{
+    int wait;
+    printf("┌────────────────────────────────────────────────┐\n");
+    printf("│                                                │\n");
+    printf("│         ╔═══════════════════════════╗          │\n");
+    printf("│         ║     Ajouter un livre      ║          │\n");
+    printf("│         ╚═══════════════════════════╝          │\n");
+    printf("│                                                │\n");
+    printf("└────────────────────────────────────────────────┘\n");
+    add_book(database);
+    printf("\nEntrer une valeur pour continuer(ex: 1-9):");
+    scanf("%d",&wait);
+}
+
+void suppressionLivre(Database *database,int *match)
+{
+    int wait;
+    printf("┌────────────────────────────────────────────────┐\n");
+    printf("│                                                │\n");
+    printf("│         ╔═══════════════════════════╗          │\n");
+    printf("│         ║    Suppresion de livre    ║          │\n");
+    printf("│         ╚═══════════════════════════╝          │\n");
+    printf("│                                                │\n");
+    printf("└────────────────────────────────────────────────┘\n");
+    remove_book(database,match);
+    printf("\nEntrer une valeur pour continuer(ex: 1-9):");
+    scanf("%d",&wait);
+}
+
+void quitter(Database *database)
+{
+    save_change(database);
+    printf("\nMerci d'avoir utilisé la bibliotheque UQTR\n");
+    exit(0);
+}
+

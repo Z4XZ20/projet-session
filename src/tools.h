@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 struct etat_livre{
     char nom[60];
@@ -28,6 +29,7 @@ void write_database();
 void store_data(Database *database);
 void id_parts(Database *database,char *temp,int book_read);
 const char* book_inv(int i);
+void print_searchname(Database *database,int* match);
 int stringcounter();
 int checkfile_lenght();
 int *compare(Database *database,char *temp);
@@ -36,6 +38,11 @@ void rent_a_book(Database *database,int* match);
 void return_book(Database *database,int* match);
 void add_book(Database *database);
 void remove_book(Database *database,int* match);
-
+void menu_default();
+void rechercher_menu();
+void resultats_recherche(Database *database,int *match);
+void ajoutLivre(Database *database);
+void suppressionLivre(Database *database,int *match);
+void quitter(Database *database);
 
 #endif

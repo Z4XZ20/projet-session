@@ -7,11 +7,12 @@ void main() {
 int error_flag=0,i;
 Database database;
 int *match;
+char option;
 /*check if the .txt is empty*/
 
 database.nb_livre = checkfile_lenght();
 
-if(database.nb_livre<5)
+if(database.nb_livre<2)
 {   
     /*if empty then we write database*/
     write_database();
@@ -30,11 +31,59 @@ if(database.livre == NULL)
 
 store_data(&database);
 
-match=search_book(&database);
-for(i=1;i<=match[0];i++)
+do
+{
+menu_default();
+
+    scanf("%c", &option);
+    
+    switch (option)
+    {
+        case '0':
+        printf("overwriting Database");
+        write_database();
+        database.nb_livre = checkfile_lenght();
+        store_data(&database);
+        
+        break;
+
+        case '1':
+        system("clear");
+        rechercher_menu();
+        match=search_book(&database);
+        resultats_recherche(&database,match);
+        
+        break;
+
+        case '2':
+        system("clear");
+        ajoutLivre(&database);
+        break;
+
+        case '3':
+        system("clear");
+        match=search_book(&database);
+        suppressionLivre(&database,match);
+        break;
+
+        case '4':
+        system("clear");
+        quitter(&database);
+        break;
+
+        default :
+        system("clear");
+        menu_default();
+    }
+
+    
+
+}while(1);
+//match=search_book(&database);
+/*for(i=1;i<=match[0];i++)
 {
     printf("%d ",match[i]);
-}
+}*/
 //add_book(&database);
 
 //remove_book(&database,match);
@@ -43,6 +92,6 @@ for(i=1;i<=match[0];i++)
 
 //return_book(&database,match);
 
-save_change(&database);
+//save_change(&database);
 
 } 
